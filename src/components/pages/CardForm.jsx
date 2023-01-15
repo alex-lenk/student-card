@@ -1,12 +1,14 @@
 import React, {useState, useEffect} from 'react'
 import PropTypes from 'prop-types'
-import {Link} from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
 import {validator} from '../utils/validator'
 import {validatorConfig} from '../utils/validatorConfig'
 import TextField from '../form/textField'
 import Modal from '../ui/modal'
 
-const CardForm = ({name, surname, yearOfBirth, portfolioUrl}) => {
+const CardForm = () => {
+  const history = useHistory()
+  const {name, surname, yearOfBirth, portfolioUrl} = localStorage
   const [data, setData] = useState({
     name,
     surname,
@@ -37,7 +39,7 @@ const CardForm = ({name, surname, yearOfBirth, portfolioUrl}) => {
 
   const isValid = Object.keys(errors).length === 0
 
-  const handleSubmit = (event) => {
+  const handleSubmit = event => {
     event.preventDefault()
     const isValid = validate()
 
@@ -47,6 +49,10 @@ const CardForm = ({name, surname, yearOfBirth, portfolioUrl}) => {
     localStorage.setItem('surname', data.surname)
     localStorage.setItem('yearOfBirth', data.yearOfBirth)
     localStorage.setItem('portfolioUrl', data.portfolioUrl)
+
+    setTimeout(() => {
+      history.push('/')
+    }, 3000)
   }
 
   const handleClick = () => {
@@ -55,7 +61,7 @@ const CardForm = ({name, surname, yearOfBirth, portfolioUrl}) => {
 
   return (
     <form className='mb-5' onSubmit={handleSubmit}>
-      <h1 className='mb-5'>{name ? 'Редактировать' : 'Создать'}</h1>
+      <h1 className='mb-5'>{name ? 'Редактировать карточку' : 'Создать карточку'}</h1>
       <TextField
         label='Имя'
         name='name'
@@ -94,7 +100,7 @@ const CardForm = ({name, surname, yearOfBirth, portfolioUrl}) => {
         className='btn-success btn'
         onClick={handleClick}
       >
-        {name ? 'Обновить' : 'Создать'}
+        {localStorage.length ? 'Обновить' : 'Создать'}
       </button>
 
       <Modal isVisible={isModalVisible}/>

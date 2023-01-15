@@ -10,7 +10,9 @@ const Modal = ({isVisible}) => {
       <div className='modal-dialog  modal-dialog-centered'>
         <div className='modal-content text-bg-light'>
           <div className='modal-body'>
-            <h2>Обновлено!</h2>
+            <h2 className='mb-3'>Обновлено успешно!</h2>
+
+            Будите перенаправлены на главную через 3 секунды!
           </div>
           <div className='modal-footer'>
             <Link to='/' className='btn btn-info'>Посмотреть результат</Link>
