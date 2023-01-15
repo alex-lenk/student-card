@@ -1,9 +1,9 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import declensionWords from './utils/declensionWords'
 
-const StudentCard = ({name, surname, yearOfBirth, portfolioUrl}) => {
-  const getAge = new Date().getFullYear() - yearOfBirth
+const StudentCard = () => {
+  const {name, surname, yearBirth, portfolioUrl} = JSON.parse(localStorage.getItem('user'))
+  const getAge = new Date().getFullYear() - yearBirth
 
   return (
     <div className="mb-5 card">
@@ -20,7 +20,7 @@ const StudentCard = ({name, surname, yearOfBirth, portfolioUrl}) => {
 
         <li className="list-group-item">
           <strong>Год рождения: </strong>
-          {yearOfBirth} ({declensionWords(getAge, [' год', ' года', ' лет'], true)})
+          {yearBirth} ({declensionWords(getAge, [' год', ' года', ' лет'], true)})
         </li>
 
         <li className="list-group-item">
@@ -32,13 +32,6 @@ const StudentCard = ({name, surname, yearOfBirth, portfolioUrl}) => {
       </ul>
     </div>
   )
-}
-
-StudentCard.propTypes = {
-  name: PropTypes.string,
-  surname: PropTypes.string,
-  yearOfBirth: PropTypes.string,
-  portfolioUrl: PropTypes.string,
 }
 
 export default StudentCard

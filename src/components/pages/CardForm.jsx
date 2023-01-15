@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react'
-import PropTypes from 'prop-types'
 import {Link, useHistory} from 'react-router-dom'
 import {validator} from '../utils/validator'
 import {validatorConfig} from '../utils/validatorConfig'
@@ -8,13 +7,19 @@ import Modal from '../ui/modal'
 
 const CardForm = () => {
   const history = useHistory()
-  const {name, surname, yearOfBirth, portfolioUrl} = localStorage
   const [data, setData] = useState({
-    name,
-    surname,
-    yearOfBirth,
-    portfolioUrl,
+    name: '',
+    surname: '',
+    yearBirth: '',
+    portfolioUrl: '',
   })
+
+  useEffect(() => {
+    const user = localStorage.getItem('user')
+    if (user) setData(JSON.parse(user))
+  }, [])
+
+  const isStorage = localStorage.length
 
   const [errors, setErrors] = useState({})
 
@@ -45,10 +50,7 @@ const CardForm = () => {
 
     if (!isValid) return
 
-    localStorage.setItem('name', data.name)
-    localStorage.setItem('surname', data.surname)
-    localStorage.setItem('yearOfBirth', data.yearOfBirth)
-    localStorage.setItem('portfolioUrl', data.portfolioUrl)
+    localStorage.setItem('user', JSON.stringify(data))
 
     setTimeout(() => {
       history.push('/')
@@ -61,7 +63,7 @@ const CardForm = () => {
 
   return (
     <form className='mb-5' onSubmit={handleSubmit}>
-      <h1 className='mb-5'>{name ? 'Редактировать карточку' : 'Создать карточку'}</h1>
+      <h1 className='mb-5'>{isStorage ? 'Редактировать карточку' : 'Создать карточку'}</h1>
       <TextField
         label='Имя'
         name='name'
@@ -79,10 +81,10 @@ const CardForm = () => {
       <TextField
         label='Год рождения'
         type='number'
-        name='yearOfBirth'
-        value={data.yearOfBirth}
+        name='yearBirth'
+        value={data.yearBirth}
         onChange={handleChange}
-        error={errors.yearOfBirth}
+        error={errors.yearBirth}
       />
       <TextField
         label='Портфолио'
@@ -100,7 +102,7 @@ const CardForm = () => {
         className='btn-success btn'
         onClick={handleClick}
       >
-        {localStorage.length ? 'Обновить' : 'Создать'}
+        {isStorage ? 'Обновить' : 'Создать'}
       </button>
 
       <Modal isVisible={isModalVisible}/>
@@ -111,15 +113,8 @@ const CardForm = () => {
 CardForm.defaultProps = {
   name: '',
   surname: '',
-  yearOfBirth: '',
+  yearBirth: '',
   portfolioUrl: '',
-}
-
-CardForm.propTypes = {
-  name: PropTypes.string,
-  surname: PropTypes.string,
-  yearOfBirth: PropTypes.string,
-  portfolioUrl: PropTypes.string,
 }
 
 export default CardForm

@@ -1,22 +1,22 @@
 export function validator(data, config) {
-  const errors = {};
-  const urlRegExp = /^https?:\/\/(www\.)?\w+\..+/g;
+  const errors = {}
+  const urlRegExp = /^https?:\/\/(www\.)?\w+\..+/g
   function validate(validateMethod, data, config) {
-    let statusValidate;
+    let statusValidate
     switch (validateMethod) {
       case 'isRequired':
-        statusValidate = data.trim() === '';
-        break;
+        statusValidate = data?.trim() === ''
+        break
       case 'isInRange':
-        statusValidate = data < config.min || data > config.max;
-        break;
+        statusValidate = data < config.min || data > config.max
+        break
       case 'isUrl':
-        statusValidate = !urlRegExp.test(data);
-        break;
+        statusValidate = !urlRegExp.test(data)
+        break
       default:
-        break;
+        break
     }
-    if (statusValidate) return config.message;
+    if (statusValidate) return config.message
   }
   for (const fieldName in data) {
     for (const validateMethod in config[fieldName]) {
@@ -24,11 +24,11 @@ export function validator(data, config) {
         validateMethod,
         data[fieldName],
         config[fieldName][validateMethod]
-      );
+      )
       if (error && !errors[fieldName]) {
-        errors[fieldName] = error;
+        errors[fieldName] = error
       }
     }
   }
-  return errors;
+  return errors
 }

@@ -9,14 +9,13 @@ export const validatorConfig = {
       message: 'Поле \'Фамилия\' обязательно для заполнения',
     },
   },
-  yearOfBirth: {
+  yearBirth: {
     isRequired: {
       message: 'Поле \'Год рождения\' обязательно для заполнения',
     },
     isInRange: {
       message: 'Год введён некорректно',
-      // Для примера, допускаю, что возраст человека должен быть в пределах от 0 до 100 лет
-      min: new Date().getFullYear() - 100,
+      min: new Date().getFullYear() - 120,
       max: new Date().getFullYear(),
     },
   },

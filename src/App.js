@@ -7,7 +7,7 @@ import CardForm from './components/pages/CardForm'
 function App() {
   return (
     <BrowserRouter>
-      <div className='mx-auto pt-5 pb-5 offset-md-4 col-md-4'>
+      <div className='mx-auto pt-5 pb-5 offset-md-4 col-md-5'>
         <Switch>
           <Route path='/' exact component={Home}/>
           <Route path='/card-form' component={CardForm}/>

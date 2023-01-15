@@ -23,7 +23,7 @@ const TextField = ({label, type, name, value, onChange, error, placeholder}) => 
           type={type}
           name={name}
           id={name}
-          value={value.trim()}
+          value={value}
           onChange={handleChange}
           placeholder={placeholder ? placeholder : ''}
         />
